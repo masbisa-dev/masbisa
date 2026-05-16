@@ -1,0 +1,10 @@
+# Dependency directories
+node_modules/
+dist/
+.env
+
+# Clean up any residual tracking paths
+.venv/
+__pycache__/
+*.pyc
+*.sqlite3
