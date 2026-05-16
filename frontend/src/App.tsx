@@ -11,17 +11,23 @@ function App() {
   const [data, setData] = useState<HealthStatus | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
-  useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/health")
+  const checkHealth = () => {
+    setLoading(true)
+    axios.get("http://localhost:8000/api/health")
       .then((res) => {
         setData(res.data)
         setLoading(false)
       })
       .catch((err) => {
         console.error("Connection failed:", err)
+        setData(null)
         setLoading(false)
       })
-    }, [])
+  }
+
+  useEffect(() => {
+    checkHealth()
+  }, [])
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-slate-950 text-slate-50 gap-4">
@@ -38,12 +44,16 @@ function App() {
               <p><span className="text-slate-500">Workspace:</span> <span className="text-sky-400">{data.workspace}</span></p>
             </div>
           ) : (
-            <span className="text-destructive">Connection Offline</span>
+            <span className="text-rose-500 font-semibold">Connection Offline</span>
           )}
         </div>
       </div>
       
-      <Button className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold tracking-wide mt-2">
+      {/* Attached the trigger handler here */}
+      <Button 
+        onClick={checkHealth}
+        className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold tracking-wide mt-2"
+      >
         Refresh Status
       </Button>
     </div>
