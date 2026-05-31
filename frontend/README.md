@@ -1,3 +1,5 @@
+> **Note:** The [root README](../README.md) is the source of truth for this repo. The backend is Django (not Express).
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
