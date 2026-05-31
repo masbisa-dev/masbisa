@@ -1,0 +1,19 @@
+[project]
+name = "masbisa-backend"
+version = "0.1.0"
+description = "MASBISA Django API backend"
+requires-python = ">=3.12"
+dependencies = [
+    "dj-rest-auth>=7.2.0",
+    "django>=6.0.5",
+    "django-allauth>=65.18.0",
+    "django-cors-headers>=4.9.0",
+    "django-environ>=0.13.0",
+    "djangorestframework>=3.17.1",
+    "psycopg[binary]>=3.3.4",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.15",
+]
