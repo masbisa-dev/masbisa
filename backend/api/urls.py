@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path("health", views.health, name="health"),
+    path("auth/csrf", views.csrf, name="csrf"),  # GET /api/auth/csrf
 ]
