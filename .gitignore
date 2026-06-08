@@ -12,3 +12,7 @@ __pycache__/
 
 # ai agent irrelevant files
 .cursor
+
+# ignore TODO (used only for learning)
+TODO.md
+/TODO/
