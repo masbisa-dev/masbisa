@@ -1,23 +1,14 @@
 import {
-  createContext,
   useCallback,
   useEffect,
   useMemo,
   useState,
   type ReactNode,
-} from "React";
-import { ApiError, bootstrapCsrf } from "@lib/api";
+} from "react";
+import { ApiError, bootstrapCsrf } from "@/lib/api";
 import * as authApi from "@/lib/auth";
 import type { AuthStatus, User } from "@/types/auth";
-
-type AuthContextValue = {
-  user: User | null;
-  status: AuthStatus;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-};
-
-const AuthContext = createContext<AuthContextValue | null>(null);
+import { AuthContext } from "./-auth-context";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -61,13 +52,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await authApi.logout();
     } catch (err) {
-      // Session may already be expired - still clear local state unless unexpected error
+      // Session may already be expired — still clear local state unless unexpected error
       if (!(err instanceof ApiError) || err.status !== 401) {
         throw err;
       }
-      setUser(null);
-      setStatus("unauthenticated");
     }
+    setUser(null);
+    setStatus("unauthenticated");
   }, []);
 
   const value = useMemo(
@@ -76,12 +67,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth(): AuthContextValue {
-  const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-  return ctx;
 }
