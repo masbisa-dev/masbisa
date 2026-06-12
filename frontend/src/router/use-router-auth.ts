@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/context/-auth-context";
 
 // Subset of auth context for route guards / layouts (no login/logout)
 export function useRouterAuth() {
