@@ -39,9 +39,18 @@ export function LoginPage({ redirectTo = "/" }: LoginPageProps) {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
+
     try {
-      await login(email, password);
-      navigate({ to: redirectTo });
+      if (!email && !password) {
+        setError("Please provide correct email & password.");
+      } else if (!email) {
+        setError("Please provide correct email.");
+      } else if (!password) {
+        setError("Please provide correct password.");
+      } else {
+        await login(email, password);
+        navigate({ to: redirectTo });
+      }
     } catch (err) {
       // redirect() throws — rethrow so navigation still works after successful login
       if (err && typeof err === "object" && "isRedirect" in err) {
