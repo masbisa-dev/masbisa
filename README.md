@@ -15,11 +15,13 @@ masbisa/
 
 ## Tech stack
 
-| Layer    | Stack                                                                 |
-| -------- | --------------------------------------------------------------------- |
-| Frontend | React 19, Vite, TypeScript, Tailwind CSS 4, shadcn/ui, fetch API    |
-| Backend  | Python 3.12, Django, Django REST Framework, PostgreSQL, uv           |
+
+| Layer    | Stack                                                                  |
+| -------- | ---------------------------------------------------------------------- |
+| Frontend | React 19, Vite, TypeScript, Tailwind CSS 4, shadcn/ui, fetch API       |
+| Backend  | Python 3.12, Django, Django REST Framework, PostgreSQL, uv             |
 | Tooling  | [mise](https://mise.jdx.dev/) (Node 20, pnpm, Python 3.12, uv), Docker |
+
 
 Auth packages (`django-allauth`, `dj-rest-auth`) are installed and configured in settings but auth endpoints are not exposed yet.
 
@@ -152,7 +154,7 @@ mise run backend:dev
 # or: cd backend && uv run python manage.py runserver 8000
 ```
 
-Frontend (Vite default, usually http://localhost:5173):
+Frontend (Vite default, usually [http://localhost:5173](http://localhost:5173)):
 
 ```bash
 cd frontend && pnpm dev
@@ -166,13 +168,15 @@ Open the frontend URL in your browser. The UI calls `GET /api/health` and shows 
 
 Copy from `backend/.env.example`:
 
-| Variable              | Description                                      | Default                                              |
-| --------------------- | ------------------------------------------------ | ---------------------------------------------------- |
-| `SECRET_KEY`          | Django secret key                                | (required)                                           |
-| `DEBUG`               | Enable debug mode                                | `True`                                               |
-| `ALLOWED_HOSTS`       | Comma-separated hostnames                        | `localhost,127.0.0.1`                                |
-| `DATABASE_URL`        | PostgreSQL connection URL                        | `postgres://masbisa:masbisa@localhost:5433/masbisa`  |
-| `CORS_ALLOWED_ORIGINS`| Comma-separated frontend origins for CORS      | `http://localhost:5173`                              |
+
+| Variable               | Description                               | Default                                             |
+| ---------------------- | ----------------------------------------- | --------------------------------------------------- |
+| `SECRET_KEY`           | Django secret key                         | (required)                                          |
+| `DEBUG`                | Enable debug mode                         | `True`                                              |
+| `ALLOWED_HOSTS`        | Comma-separated hostnames                 | `localhost,127.0.0.1`                               |
+| `DATABASE_URL`         | PostgreSQL connection URL                 | `postgres://masbisa:masbisa@localhost:5433/masbisa` |
+| `CORS_ALLOWED_ORIGINS` | Comma-separated frontend origins for CORS | `http://localhost:5173`                             |
+
 
 The default `DATABASE_URL` in `.env.example` targets Docker Compose on port **5433** (`5433` on the host maps to `5432` inside the container). For a native/system PostgreSQL install, use port **5432** instead. User, password, and database name should match your chosen setup (`masbisa` / `masbisa` / `masbisa` by default).
 
@@ -180,17 +184,21 @@ The default `DATABASE_URL` in `.env.example` targets Docker Compose on port **54
 
 ### Frontend
 
-| Variable       | Description              | Default                  |
-| -------------- | ------------------------ | ------------------------ |
-| `VITE_API_URL` | Backend base URL         | `http://localhost:8000`  |
+
+| Variable       | Description      | Default                 |
+| -------------- | ---------------- | ----------------------- |
+| `VITE_API_URL` | Backend base URL | `http://localhost:8000` |
+
 
 Set in `frontend/.env` if you need to override the default during local dev or builds.
 
 ## API
 
+
 | Method | Path          | Description       |
-| :----- | :------------ | :---------------- |
+| ------ | ------------- | ----------------- |
 | GET    | `/api/health` | Health check JSON |
+
 
 Example response:
 
@@ -206,31 +214,37 @@ Example response:
 
 ### Backend (`backend/`)
 
-| Command                                      | Description                          |
-| :------------------------------------------- | :----------------------------------- |
-| `uv sync`                                    | Install Python dependencies          |
-| `uv run python manage.py migrate`            | Apply database migrations            |
-| `uv run python manage.py runserver 8000`     | Start dev server                     |
-| `uv run ruff check .`                        | Lint Python code                     |
+
+| Command                                  | Description                 |
+| ---------------------------------------- | --------------------------- |
+| `uv sync`                                | Install Python dependencies |
+| `uv run python manage.py migrate`        | Apply database migrations   |
+| `uv run python manage.py runserver 8000` | Start dev server            |
+| `uv run ruff check .`                    | Lint Python code            |
+
 
 ### mise tasks (repo root)
 
-| Task                  | Description                    |
-| :-------------------- | :----------------------------- |
-| `mise run db:up`      | Start PostgreSQL via Docker (uncomment in `.mise.toml` first) |
-| `mise run db:down`    | Stop PostgreSQL container (Docker only) |
-| `mise run backend:sync`    | `uv sync` in backend      |
-| `mise run backend:migrate` | Run Django migrations     |
-| `mise run backend:dev`     | Start Django on port 8000 |
+
+| Task                       | Description                                                   |
+| -------------------------- | ------------------------------------------------------------- |
+| `mise run db:up`           | Start PostgreSQL via Docker (uncomment in `.mise.toml` first) |
+| `mise run db:down`         | Stop PostgreSQL container (Docker only)                       |
+| `mise run backend:sync`    | `uv sync` in backend                                          |
+| `mise run backend:migrate` | Run Django migrations                                         |
+| `mise run backend:dev`     | Start Django on port 8000                                     |
+
 
 ### Frontend (`frontend/`)
 
+
 | Command        | Description              |
-| :------------- | :----------------------- |
+| -------------- | ------------------------ |
 | `pnpm dev`     | Vite dev server          |
 | `pnpm build`   | Production build         |
 | `pnpm preview` | Preview production build |
 | `pnpm lint`    | Run ESLint               |
+
 
 ## Development notes
 
@@ -239,3 +253,4 @@ Example response:
 - PostgreSQL can run natively (system install) or via `docker-compose.yml`. Match `DATABASE_URL` to your method: port **5432** for native, **5433** for Docker.
 - Auth packages are installed for future login/session endpoints; no auth routes are wired yet.
 - `frontend/README.md` is the default Vite template docs; this file is the source of truth for the whole repo.
+
