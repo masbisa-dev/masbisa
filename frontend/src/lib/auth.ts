@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import type User from "@/types/auth";
+import type { User } from "@/types/auth";
 
 // POST /api/auth/login/ - sets session cookie; response body is a token key or empty
 export async function login(email: string, password: string): Promise<void> {

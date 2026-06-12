@@ -1,11 +1,9 @@
+// Shape returned by GET /api/auth/user/ (via UserSerializer)
 export type User = {
   id: string;
   email: string;
   name?: string;
 };
 
-export type AuthResponse = {
-  user: User;
-};
-
+// Tracks bootstrap + session state in AuthProvider
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
