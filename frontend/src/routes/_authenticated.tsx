@@ -1,5 +1,5 @@
-import { useRouterAuth } from "@/router/use-router-auth";
-import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import AuthenticatedLayout from "./-authenticated";
 
 // Pathless layout — guards child routes; unauthenticated users go to /login
 export const Route = createFileRoute("/_authenticated")({
@@ -12,24 +12,3 @@ export const Route = createFileRoute("/_authenticated")({
   },
   component: AuthenticatedLayout,
 });
-
-function AuthenticatedLayout() {
-  const { user, status } = useRouterAuth();
-  const { redirectAfterLogin } = Route.useRouteContext();
-
-  if (status === "loading") {
-    return <div>Checking session…</div>;
-  }
-
-  if (!user) {
-    return (
-      <Navigate
-        to="/login"
-        search={{ redirect: redirectAfterLogin }}
-        replace
-      />
-    );
-  }
-
-  return <Outlet />;
-}
