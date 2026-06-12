@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/-auth-context";
 import { ApiError } from "@/lib/api";
-import { redirect } from "@tanstack/react-router";
+import { Navigate, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
+import { Route } from "./login";
 
 type LoginPageProps = {
   // Path to return after sign-in (from ?redirect= search param)
@@ -24,13 +25,14 @@ export function LoginPage({ redirectTo = "/" }: LoginPageProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const isLoading = status === "loading";
   const isDisabled = submitting || isLoading;
 
   // Skip login page if session already restored on mount
   if (status === "authenticated" && user) {
-    throw redirect({ to: redirectTo });
+    return <Navigate to={redirectTo} replace></Navigate>;
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -39,7 +41,7 @@ export function LoginPage({ redirectTo = "/" }: LoginPageProps) {
     setSubmitting(true);
     try {
       await login(email, password);
-      throw redirect({ to: redirectTo });
+      navigate({ to: redirectTo });
     } catch (err) {
       // redirect() throws — rethrow so navigation still works after successful login
       if (err && typeof err === "object" && "isRedirect" in err) {
@@ -119,4 +121,9 @@ export function LoginPage({ redirectTo = "/" }: LoginPageProps) {
       </Card>
     </div>
   );
+}
+
+export function LoginRoute() {
+  const { redirect: redirectTo } = Route.useSearch();
+  return <LoginPage redirectTo={redirectTo} />;
 }

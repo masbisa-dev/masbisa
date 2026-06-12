@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LoginPage } from "./-login";
+import { LoginRoute } from "./-login";
 
 // Public login route — optional ?redirect= path to return after sign-in
 export const Route = createFileRoute("/login")({
@@ -11,8 +11,3 @@ export const Route = createFileRoute("/login")({
   }),
   component: LoginRoute,
 });
-
-function LoginRoute() {
-  const { redirect: redirectTo } = Route.useSearch();
-  return <LoginPage redirectTo={redirectTo} />;
-}
