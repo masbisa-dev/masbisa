@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/components/ui/button.tsx","./src/lib/api.ts","./src/lib/utils.ts","./src/routes/authgate.tsx","./src/routes/login.tsx","./src/types/auth.ts"],"errors":true,"version":"6.0.3"}
