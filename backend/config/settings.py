@@ -103,6 +103,7 @@ REST_AUTH = {
     "USE_JWT": False,
     "SESSION_LOGIN": True,
     "USER_DETAILS_SERIALIZER": "api.serializers.UserSerializer",
+    "LOGIN_SERIALIZER": "api.serializers.CustomLoginSerializer",
 }
 
 ACCOUNT_LOGIN_METHODS = {"email"}
